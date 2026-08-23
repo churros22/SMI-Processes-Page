@@ -98,9 +98,15 @@ export default function ProcessListView({
                         <span className="date-pill"><Calendar size={12} /> {p.lastUpdated || '11/08/2026'}</span>
                       </td>
                       <td>
-                        <span className="html-status-available">
-                          <ImageIcon size={15} /> Carte PNG
-                        </span>
+                        {p.url ? (
+                          <span className="html-status-available" style={{ color: '#059669', display: 'flex', alignItems: 'center', gap: 5, fontSize: '0.8rem', fontWeight: 700 }}>
+                            <ImageIcon size={15} /> Document HD
+                          </span>
+                        ) : (
+                          <span style={{ color: '#94A3B8', fontSize: '0.78rem', fontStyle: 'italic' }}>
+                            Non téléversé
+                          </span>
+                        )}
                       </td>
                       <td>
                         <div className="table-actions">
@@ -180,9 +186,15 @@ export default function ProcessListView({
                             <span className="date-pill"><Calendar size={11} /> {sub.lastUpdated || p.lastUpdated || '11/08/2026'}</span>
                           </td>
                           <td>
-                            <span className="html-status-available">
-                              <ImageIcon size={14} /> Carte PNG
-                            </span>
+                            {sub.url ? (
+                              <span className="html-status-available" style={{ color: '#059669', display: 'flex', alignItems: 'center', gap: 5, fontSize: '0.78rem', fontWeight: 700 }}>
+                                <ImageIcon size={14} /> Document HD
+                              </span>
+                            ) : (
+                              <span style={{ color: '#94A3B8', fontSize: '0.75rem', fontStyle: 'italic' }}>
+                                Non téléversé
+                              </span>
+                            )}
                           </td>
                           <td>
                             <div className="table-actions">

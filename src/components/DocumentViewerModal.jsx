@@ -240,8 +240,24 @@ export default function DocumentViewerModal({
             </div>
           )}
 
+          {/* EMPTY STATE WHEN NO FILE ATTACHED */}
+          {!loading && !error && !fileUrl && (
+            <div className="png-empty-box" style={{ padding: '50px 20px', textAlign: 'center', color: '#F8FAFC' }}>
+              <ImageIcon size={52} color="#0066FF" style={{ marginBottom: '14px' }} />
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '8px', color: '#FFFFFF' }}>
+                Aucun document associé
+              </h3>
+              <p style={{ color: '#94A3B8', maxWidth: '440px', margin: '0 auto', fontSize: '0.9rem' }}>
+                Aucun schéma ou document officiel n'a encore été téléversé pour le processus <strong>{currentDisplayItem.code}</strong> ({currentDisplayItem.name}).
+              </p>
+              <p style={{ fontSize: '0.8rem', color: '#64748B', marginTop: '12px' }}>
+                Connectez-vous en mode Administrateur pour téléverser la fiche processus.
+              </p>
+            </div>
+          )}
+
           {/* HIGH QUALITY PNG IMAGE VIEWER */}
-          {!loading && !error && (
+          {!loading && !error && fileUrl && (
             <div 
               className="image-viewer-wrapper"
               onWheel={handleWheel}
@@ -266,9 +282,8 @@ export default function DocumentViewerModal({
                   src={fileUrl} 
                   alt={currentDisplayItem.name} 
                   className="high-res-process-img"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = './processes/cartographie-interactions-smi.png';
+                  onError={() => {
+                    setError("Impossible de charger le fichier image.");
                   }}
                   draggable={false}
                   onDragStart={(e) => e.preventDefault()}
