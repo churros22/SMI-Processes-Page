@@ -85,21 +85,24 @@ export async function commitFileToGitHub({ path, contentBase64, commitMessage, c
   while (attempt < maxRetries) {
     attempt++;
 
-    // 1. GET fresh SHA from GitHub with no-cache header
+    // 1. GET fresh SHA from GitHub (using _t parameter for cache buster, NO custom CORS headers)
     let sha = null;
     try {
       const getRes = await fetch(`${url}?ref=${branch}&_t=${Date.now()}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'Cache-Control': 'no-cache'
+          'Accept': 'application/vnd.github.v3+json'
         }
       });
       if (getRes.ok) {
         const getJson = await getRes.json();
         sha = getJson.sha || null;
+      } else if (getRes.status === 401 || getRes.status === 403) {
+        const errData = await getRes.json().catch(() => ({}));
+        throw new Error(errData.message || "Erreur d'authentification GitHub (401/403). Vérifiez votre Token.");
       }
     } catch (e) {
+      if (e.message && e.message.includes("GitHub")) throw e;
       console.log("File does not exist yet on GitHub, creating new file.");
     }
 
