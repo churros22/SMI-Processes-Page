@@ -70,7 +70,7 @@ export function utf8ToBase64(str) {
   return window.btoa(unescape(encodeURIComponent(str)));
 }
 
-export async function commitFileToGitHub({ path, contentBase64, commitMessage, config = null }) {
+export async function commitFileToGitHub({ path, contentBase64, commitMessage, config = null, maxRetries = 3 }) {
   const cfg = config || getGitHubConfig();
   const { owner, repo, branch = 'main', token } = cfg;
 
@@ -81,55 +81,69 @@ export async function commitFileToGitHub({ path, contentBase64, commitMessage, c
   const cleanPath = path.replace(/^\/+/, '');
   const url = `https://api.github.com/repos/${owner}/${repo}/contents/${cleanPath}`;
 
-  // 1. GET current SHA if file already exists
-  let sha = null;
-  try {
-    const getRes = await fetch(`${url}?ref=${branch}`, {
+  let attempt = 0;
+  while (attempt < maxRetries) {
+    attempt++;
+
+    // 1. GET fresh SHA from GitHub with no-cache header
+    let sha = null;
+    try {
+      const getRes = await fetch(`${url}?ref=${branch}&_t=${Date.now()}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Cache-Control': 'no-cache'
+        }
+      });
+      if (getRes.ok) {
+        const getJson = await getRes.json();
+        sha = getJson.sha || null;
+      }
+    } catch (e) {
+      console.log("File does not exist yet on GitHub, creating new file.");
+    }
+
+    // 2. PUT commit
+    const body = {
+      message: commitMessage || `[Admin Update] Update ${cleanPath}`,
+      content: contentBase64,
+      branch: branch
+    };
+    if (sha) {
+      body.sha = sha;
+    }
+
+    const putRes = await fetch(url, {
+      method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
     });
-    if (getRes.ok) {
-      const getJson = await getRes.json();
-      sha = getJson.sha || null;
+
+    if (putRes.ok) {
+      const resJson = await putRes.json();
+      return {
+        success: true,
+        commitSha: resJson.commit?.sha,
+        downloadUrl: resJson.content?.download_url,
+        path: cleanPath
+      };
     }
-  } catch (e) {
-    console.log("File does not exist yet on GitHub, creating new file.");
-  }
 
-  // 2. PUT commit
-  const body = {
-    message: commitMessage || `[Admin Update] Update ${cleanPath}`,
-    content: contentBase64,
-    branch: branch
-  };
-  if (sha) {
-    body.sha = sha;
-  }
-
-  const putRes = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!putRes.ok) {
     const errorJson = await putRes.json().catch(() => ({}));
+
+    // If 409 Conflict or 422 SHA mismatch, wait 800ms and retry with fresh SHA
+    if ((putRes.status === 409 || putRes.status === 422) && attempt < maxRetries) {
+      console.warn(`GitHub API 409/422 Conflict on ${cleanPath}, retrying attempt ${attempt}...`);
+      await new Promise(r => setTimeout(r, 800));
+      continue;
+    }
+
     throw new Error(errorJson.message || `Erreur commit GitHub (${putRes.status})`);
   }
-
-  const resJson = await putRes.json();
-  return {
-    success: true,
-    commitSha: resJson.commit?.sha,
-    downloadUrl: resJson.content?.download_url,
-    path: cleanPath
-  };
 }
 
 export async function commitProcessDataToGitHub(processes, globalMapProcess, commitMessage = null) {

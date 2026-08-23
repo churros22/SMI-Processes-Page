@@ -211,11 +211,13 @@ export default function PngMapViewer({
         try {
           if (showToast) showToast("Téléversement direct de la carte PNG sur GitHub...", "info");
           await uploadImageToGitHub(file, fileNameOnGit, `[Admin Upload] Nouvelle cartographie : ${file.name}`);
+          // Wait 600ms to allow GitHub API branch HEAD to settle before committing data.json
+          await new Promise(r => setTimeout(r, 600));
           await commitProcessDataToGitHub(allProcesses || [], updatedMap);
           if (showToast) showToast("Image PNG commitée sur GitHub avec succès ! GitHub Pages met à jour le site pour tout le monde.", "success");
         } catch (ghErr) {
           console.error("GitHub upload error:", ghErr);
-          if (showToast) showToast(`Carte sauvegardée en local. (Erreur GitHub: ${ghErr.message})`, "error");
+          if (showToast) showToast(`Erreur GitHub: ${ghErr.message}`, "error");
         }
       } else {
         if (showToast) showToast(`Nouvelle carte PNG téléversée en local ! (${file.name})`, "success");

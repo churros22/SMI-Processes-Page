@@ -7,8 +7,8 @@ export const GLOBAL_MAP_PROCESS = {
   version: 'Rev 3.0',
   lastUpdated: new Date().toLocaleDateString('fr-FR'),
   description: 'Schéma d\'interaction global des processus du Système de Management Intégré (ISO 9001 • ISO 13485).',
-  url: './processes/cartographie-interactions-smi.png',
-  fileType: 'image',
+  url: '',
+  fileType: '',
   status: 'Validé'
 };
 
