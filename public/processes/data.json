@@ -1,17 +1,4 @@
 {
-  "globalMapProcess": {
-    "id": "P#MAP_GLOBAL",
-    "code": "CARTOGRAPHIE",
-    "name": "Cartographie des Interactions du SMI",
-    "category": "Management",
-    "pilote": "Direction Générale & Responsable SMI",
-    "version": "Rev 3.0",
-    "lastUpdated": "23/08/2026",
-    "description": "Schéma d'interaction global des processus du Système de Management Intégré (ISO 9001 • ISO 13485).",
-    "url": "",
-    "fileType": "",
-    "status": "Validé"
-  },
   "processes": [
     {
       "id": "P#1.1",
