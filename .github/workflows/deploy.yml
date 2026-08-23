@@ -3,6 +3,7 @@ name: Deploy SMI Processes to GitHub Pages
 on:
   push:
     branches: [ main, master ]
+  workflow_dispatch:
 
 permissions:
   contents: read
