@@ -362,6 +362,7 @@ export default function App() {
         onClose={closeModal}
         processData={editingProcess}
         onSaveProcess={handleSaveProcess}
+        onDeleteProcess={handleDeleteProcess}
         showToast={showToast}
       />
 

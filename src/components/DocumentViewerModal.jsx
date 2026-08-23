@@ -205,7 +205,7 @@ export default function DocumentViewerModal({
 
             {/* Parent Process Tab */}
             <button
-              className={`sub-tab-item ${activeItem.id === processData.id ? 'active' : ''}`}
+              className={`sub-tab-item ${(activeItem?.id || processData?.id) === processData?.id ? 'active' : ''}`}
               onClick={() => setActiveItem(processData)}
             >
               <strong>{processData.code}</strong> (Principal)
@@ -215,7 +215,7 @@ export default function DocumentViewerModal({
             {processData.subProcesses.map((sub) => (
               <button
                 key={sub.id || sub.code}
-                className={`sub-tab-item ${activeItem.id === sub.id ? 'active' : ''}`}
+                className={`sub-tab-item ${(activeItem?.id === sub.id || activeItem?.code === sub.code) ? 'active' : ''}`}
                 onClick={() => setActiveItem(sub)}
               >
                 <strong>{sub.code}</strong> : {sub.name}
