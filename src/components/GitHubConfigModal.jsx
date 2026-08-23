@@ -114,8 +114,11 @@ export default function GitHubConfigModal({
               onChange={(e) => setConfig({ ...config, token: e.target.value })}
               required
             />
-            <span className="form-hint-text">
-              <Info size={12} /> Stocké de façon sécurisée uniquement sur votre navigateur (LocalStorage). Permission requise : <code>contents:write</code> ou <code>repo</code>.
+            <span className="form-hint-text" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
+              <span><Info size={12} /> Stocké de façon sécurisée uniquement sur votre navigateur (LocalStorage). Permission requise : <code>repo</code> ou <code>contents:write</code>.</span>
+              <a href="https://github.com/settings/tokens/new?scopes=repo&description=SMI+Processes+Admin+Token" target="_blank" rel="noreferrer" style={{ color: '#0066FF', textDecoration: 'underline', fontWeight: 700, marginTop: 2 }}>
+                👉 Créer un Jeton (Token) GitHub en 1 clic
+              </a>
             </span>
           </div>
 

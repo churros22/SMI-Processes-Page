@@ -10,8 +10,8 @@ export function getGitHubConfig() {
     console.warn("Error reading GitHub config:", e);
   }
   return {
-    owner: '',
-    repo: '',
+    owner: 'churros22',
+    repo: 'SMI-Processes-Page',
     branch: 'main',
     token: ''
   };
