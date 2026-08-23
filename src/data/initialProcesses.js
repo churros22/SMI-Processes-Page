@@ -1,0 +1,233 @@
+export const GLOBAL_MAP_PROCESS = {
+  id: 'P#MAP_GLOBAL',
+  code: 'CARTOGRAPHIE',
+  name: 'Cartographie des Interactions du SMI',
+  category: 'Management',
+  pilote: 'Direction Générale & Responsable SMI',
+  version: 'Rev 3.0',
+  lastUpdated: '11/08/2026',
+  description: 'Schéma d\'interaction global des processus du Système de Management Intégré (ISO 9001 • ISO 13485).',
+  url: './processes/cartographie-interactions-smi.png',
+  fileType: 'image',
+  status: 'Validé'
+};
+
+export const INITIAL_PROCESSES = [
+  // --- ZONE 1 : PROCESSUS DE MANAGEMENT (PILOTAGE) ---
+  {
+    id: 'P#1.1',
+    code: 'P#1.1',
+    name: 'Stratégies & Revue de Direction',
+    category: 'Management',
+    pilote: 'Direction Générale',
+    version: 'Rev 3.0',
+    lastUpdated: '11/08/2026',
+    description: 'Définition des axes stratégiques SMI, revue de direction et politique qualité ISO 9001 / ISO 13485.',
+    url: './processes/p1.1-strategie.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#1.2',
+    code: 'P#1.2',
+    name: 'Affaires Réglementaires & Surveillance',
+    category: 'Management',
+    pilote: 'Responsable Affaires Réglementaires',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Surveillance post-commercialisation, dossiers techniques de conformité ISO 13485 et matériovigilance des gants.',
+    url: './processes/p1.2-affaires-reglementaires.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#1.3',
+    code: 'P#1.3',
+    name: 'Management Qualité',
+    category: 'Management',
+    pilote: 'Responsable SMI / Qualité',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Gestion globale du système de management intégré, audits internes et amélioration continue.',
+    url: './processes/p1.3-management-qualite.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: [
+      {
+        id: 'P#1.3.1',
+        code: 'P#1.3.1',
+        name: 'Maîtrise Documentation SMI',
+        pilote: 'Gestionnaire Documentaire',
+        version: 'Rev 2.0',
+        lastUpdated: '11/08/2026',
+        description: 'Gestion des procédures, fiches processus, instructions de travail et enregistrements SMI.',
+        url: './processes/p1.3.1-documentation-smi.png',
+        fileType: 'image'
+      }
+    ]
+  },
+  {
+    id: 'P#1.4',
+    code: 'P#1.4',
+    name: 'Assurance Qualité Technique',
+    category: 'Management',
+    pilote: 'Responsable AQ Technique',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Validation des procédés de fabrication des gants, métrologie, étalonnage et actions d\'amélioration technique.',
+    url: './processes/p1.4-assurance-qualite-technique.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#9',
+    code: 'P#9',
+    name: 'Maîtrise Coût de la Non-Qualité',
+    category: 'Management',
+    pilote: 'Contrôleur de Gestion / Qualité',
+    version: 'Rev 2.0',
+    lastUpdated: '11/08/2026',
+    description: 'Suivi et analyse financière des coûts de non-qualité (CNQ), des rebuts et des coûts d\'obtention de la qualité.',
+    url: './processes/p9-cout-non-qualite.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+
+  // --- ZONE 2 : PROCESSUS DE RÉALISATION (OPÉRATIONNELS) ---
+  {
+    id: 'P#2',
+    code: 'P#2',
+    name: 'Besoins & Retours Clients',
+    category: 'Réalisation',
+    pilote: 'Responsable Commercial & Service Client',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Identification des exigences clients, revue des contrats, suivi des commandes et satisfaction client.',
+    url: './processes/p2-retours-client.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#10',
+    code: 'P#10',
+    name: 'Conception & Développement',
+    category: 'Réalisation',
+    pilote: 'Responsable R&D / Ingénierie Produit',
+    version: 'Rev 1.0',
+    lastUpdated: '11/08/2026',
+    description: 'Traduction des exigences clients en spécifications produit/procédé et dossiers de conception ISO 13485 avant industrialisation.',
+    url: './processes/p10-conception-developpement.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#3',
+    code: 'P#3',
+    name: 'Maîtrise des Achats - Patrimoine',
+    category: 'Réalisation',
+    pilote: 'Responsable Achats',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Sélection et évaluation des fournisseurs de latex, chimie et équipements de production.',
+    url: './processes/p3-achats-patrimoine.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: [
+      {
+        id: 'P#3.1',
+        code: 'P#3.1',
+        name: 'Vérification Achats & Patrimoine',
+        pilote: 'Responsable Réception & Contrôle',
+        version: 'Rev 2.0',
+        lastUpdated: '11/08/2026',
+        description: 'Contrôle à la réception des matières premières, réactifs chimiques et gestion du patrimoine.',
+        url: './processes/p3.1-verification-achats.png',
+        fileType: 'image'
+      }
+    ]
+  },
+  {
+    id: 'P#5',
+    code: 'P#5',
+    name: 'Activités Opérationnelles',
+    category: 'Réalisation',
+    pilote: 'Directeur de Production',
+    version: 'Rev 3.0',
+    lastUpdated: '11/08/2026',
+    description: 'Procédé complet de fabrication des gants en latex (trempage, vulcanisation, nettoyage, conditionnement).',
+    url: './processes/p5-activites-operationnelles.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#7',
+    code: 'P#7',
+    name: 'Contrôle & Essais Produits',
+    category: 'Réalisation',
+    pilote: 'Responsable Laboratoire QC',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Essais d\'étanchéité, résistance mécanique, biosécurité (ISO 13485), contrôles réception/en-cours et libération des lots.',
+    url: './processes/p7-controle-essais-produits.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+
+  // --- ZONE 3 : PROCESSUS SUPPORT (SOUTIEN) ---
+  {
+    id: 'P#4',
+    code: 'P#4',
+    name: 'Gestion des Compétences',
+    category: 'Support',
+    pilote: 'Responsable Ressources Humaines',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Recrutement, plan de formation et habilitations du personnel de production et laboratoire.',
+    url: './processes/p4-gestion-competences.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#6',
+    code: 'P#6',
+    name: 'Système d\'Information',
+    category: 'Support',
+    pilote: 'Responsable SI / IT',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Infrastructures réseau, systèmes ERP/GMAO, sécurité des données et traçabilité des opérations.',
+    url: './processes/p6-systeme-information.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  },
+  {
+    id: 'P#8',
+    code: 'P#8',
+    name: 'Santé, Sécurité & Environnement',
+    category: 'Support',
+    pilote: 'Responsable HSE',
+    version: 'Rev 2.1',
+    lastUpdated: '11/08/2026',
+    description: 'Sécurité au travail (SST), prévention des risques, traitement des effluents latex et gestion environnementale.',
+    url: './processes/p8-sante-securite-environnement.png',
+    fileType: 'image',
+    status: 'Validé',
+    subProcesses: []
+  }
+];
+
+export const PROCESS_CATEGORIES = {
+  Management: { label: 'Processus de Management (Pilotage)', color: '#D97706', bgColor: '#FEF3C7', borderColor: '#F59E0B' },
+  Réalisation: { label: 'Processus de Réalisation (Opérationnels)', color: '#0284C7', bgColor: '#E0F2FE', borderColor: '#0369A1' },
+  Support: { label: 'Processus Support (Soutien)', color: '#7C3AED', bgColor: '#EDE9FE', borderColor: '#6D28D9' }
+};

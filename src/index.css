@@ -1,0 +1,49 @@
+:root {
+  --primary: #003B7A;
+  --primary-hover: #002855;
+  --primary-light: #0056B3;
+  --primary-bg: #EFF6FF;
+  
+  --cat-management: #D97706;
+  --cat-management-bg: #FEF3C7;
+  --cat-management-border: #F59E0B;
+
+  --cat-realisation: #0284C7;
+  --cat-realisation-bg: #E0F2FE;
+  --cat-realisation-border: #0369A1;
+
+  --cat-support: #7C3AED;
+  --cat-support-bg: #EDE9FE;
+  --cat-support-border: #6D28D9;
+
+  --bg-main: #F1F5F9;
+  --card-bg: #FFFFFF;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border-color: #E2E8F0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-family);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
