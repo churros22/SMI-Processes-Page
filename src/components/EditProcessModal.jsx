@@ -13,6 +13,7 @@ import {
   Layers
 } from 'lucide-react';
 import { uploadProcessFile, saveFileBlob } from '../utils/storage';
+import { getGitHubConfig, uploadImageToGitHub } from '../utils/githubApi';
 
 export default function EditProcessModal({
   isOpen,
@@ -106,22 +107,31 @@ export default function EditProcessModal({
         detectedType = 'word';
       }
 
-      const fileKey = `${formData.code.replace(/[^a-zA-Z0-9]/g, '_')}_${Date.now()}_${file.name}`;
-      await saveFileBlob(fileKey, file);
+      const cleanCode = (formData.code || 'proc').replace(/[^a-zA-Z0-9]/g, '_');
+      const safeGitFileName = `${cleanCode}_${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+      let finalUrl = `./processes/${safeGitFileName}`;
 
-      const fileUrl = await uploadProcessFile(file);
+      const ghConfig = getGitHubConfig();
+      if (ghConfig.token) {
+        setUploadMessage('Téléversement direct du fichier sur GitHub pour tout le monde...');
+        await uploadImageToGitHub(file, safeGitFileName, `[Admin Upload] Fichier processus ${formData.code} : ${file.name}`);
+      } else {
+        const fileKey = `${cleanCode}_${Date.now()}_${file.name}`;
+        await saveFileBlob(fileKey, file);
+        finalUrl = await uploadProcessFile(file);
+      }
 
       setFormData(prev => ({
         ...prev,
-        url: fileUrl,
+        url: finalUrl,
         fileType: detectedType,
         originalFileName: file.name
       }));
 
-      setUploadMessage('Fichier prêt !');
+      setUploadMessage('Fichier prêt et synchronisé !');
     } catch (err) {
       console.error("Upload error:", err);
-      setUploadMessage("Erreur lors du téléversement.");
+      setUploadMessage(`Erreur: ${err.message || "Impossible de téléverser le fichier."}`);
     } finally {
       setUploading(false);
     }
@@ -143,18 +153,28 @@ export default function EditProcessModal({
         detectedType = 'word';
       }
 
-      const fileKey = `sub_${Date.now()}_${file.name}`;
-      await saveFileBlob(fileKey, file);
-      const fileUrl = await uploadProcessFile(file);
+      const cleanCode = (subForm.code || 'sub').replace(/[^a-zA-Z0-9]/g, '_');
+      const safeGitFileName = `sub_${cleanCode}_${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+      let finalUrl = `./processes/${safeGitFileName}`;
+
+      const ghConfig = getGitHubConfig();
+      if (ghConfig.token) {
+        await uploadImageToGitHub(file, safeGitFileName, `[Admin Upload] Fichier sous-processus ${subForm.code} : ${file.name}`);
+      } else {
+        const fileKey = `sub_${Date.now()}_${file.name}`;
+        await saveFileBlob(fileKey, file);
+        finalUrl = await uploadProcessFile(file);
+      }
 
       setSubForm(prev => ({
         ...prev,
-        url: fileUrl,
+        url: finalUrl,
         fileType: detectedType,
         originalFileName: file.name
       }));
     } catch (err) {
       console.error("Sub upload error:", err);
+      alert(`Erreur téléversement sous-processus: ${err.message}`);
     } finally {
       setSubUploading(false);
     }

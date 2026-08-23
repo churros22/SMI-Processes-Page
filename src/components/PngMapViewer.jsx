@@ -186,11 +186,18 @@ export default function PngMapViewer({
     setIsUploading(true);
     try {
       const uploadRes = await uploadImageFile(mapProcess.id || 'GLOBAL_MAP', file);
-      const fileNameOnGit = "cartographie-interactions-smi.png";
+      const timeStamp = Date.now();
+      const fileExt = file.name.substring(file.name.lastIndexOf('.')).toLowerCase() || '.png';
+      const fileNameOnGit = `cartographie-interactions-smi_${timeStamp}${fileExt}`;
+      const relativeUrl = `./processes/${fileNameOnGit}`;
+
+      const ghConfig = getGitHubConfig();
+      const isGitHubActive = !!ghConfig.token;
+
       const updatedMap = {
         ...mapProcess,
-        url: `./processes/${fileNameOnGit}`,
-        fileKey: uploadRes.fileKey || null,
+        url: relativeUrl,
+        fileKey: isGitHubActive ? null : (uploadRes.fileKey || null),
         originalFileName: file.name,
         lastUpdated: new Date().toLocaleDateString('fr-FR')
       };
@@ -200,13 +207,12 @@ export default function PngMapViewer({
       setPan({ x: 0, y: 0 });
 
       // Auto Commit to GitHub if configured
-      const ghConfig = getGitHubConfig();
-      if (ghConfig.token) {
+      if (isGitHubActive) {
         try {
-          if (showToast) showToast("Téléversement direct de la carte sur GitHub...", "info");
+          if (showToast) showToast("Téléversement direct de la carte PNG sur GitHub...", "info");
           await uploadImageToGitHub(file, fileNameOnGit, `[Admin Upload] Nouvelle cartographie : ${file.name}`);
           await commitProcessDataToGitHub(allProcesses || [], updatedMap);
-          if (showToast) showToast("Image PNG commitée sur GitHub avec succès ! GitHub Pages va mettre à jour le site.", "success");
+          if (showToast) showToast("Image PNG commitée sur GitHub avec succès ! GitHub Pages met à jour le site pour tout le monde.", "success");
         } catch (ghErr) {
           console.error("GitHub upload error:", ghErr);
           if (showToast) showToast(`Carte sauvegardée en local. (Erreur GitHub: ${ghErr.message})`, "error");
