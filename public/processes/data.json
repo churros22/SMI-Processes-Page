@@ -220,5 +220,20 @@
       "subProcesses": []
     }
   ],
+  "globalMapProcess": {
+    "id": "P#MAP_GLOBAL",
+    "code": "CARTOGRAPHIE",
+    "name": "Cartographie des Interactions du SMI",
+    "category": "Management",
+    "pilote": "Direction Générale & Responsable SMI",
+    "version": "Rev 3.0",
+    "lastUpdated": "23/08/2026",
+    "description": "Schéma d'interaction global des processus du Système de Management Intégré (ISO 9001 • ISO 13485).",
+    "url": "./processes/cartographie-interactions-smi_1787486701782.png",
+    "fileType": "image",
+    "status": "Validé",
+    "fileKey": null,
+    "originalFileName": "Diagramme d'interaction des processus clés.png"
+  },
   "lastUpdated": "23/08/2026"
 }
