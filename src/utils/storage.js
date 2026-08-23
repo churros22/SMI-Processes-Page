@@ -136,7 +136,7 @@ export async function uploadImageFile(processId, file) {
 }
 
 export async function resolveProcessUrl(process) {
-  if (!process) return DEFAULT_MAP_URL;
+  if (!process) return '';
 
   if (process.fileKey) {
     const fileObj = await getFileFromIndexedDB(process.fileKey);
@@ -150,7 +150,7 @@ export async function resolveProcessUrl(process) {
     return process.url;
   }
 
-  return DEFAULT_MAP_URL;
+  return '';
 }
 
 function getMimeType(filename = '') {

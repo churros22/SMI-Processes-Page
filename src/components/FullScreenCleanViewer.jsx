@@ -32,13 +32,17 @@ export default function FullScreenCleanViewer({
 
   useEffect(() => {
     async function loadImg() {
-      if (!activeProcess) return;
+      if (!activeProcess || !activeProcess.url || activeProcess.url.trim().length === 0) {
+        setImageUrl('');
+        setIsLoading(false);
+        return;
+      }
       setIsLoading(true);
       try {
         const resolved = await resolveProcessUrl(activeProcess);
-        setImageUrl(resolved || activeProcess.url || './processes/cartographie-interactions-smi.png');
+        setImageUrl(resolved || activeProcess.url || '');
       } catch (err) {
-        setImageUrl(activeProcess.url || './processes/cartographie-interactions-smi.png');
+        setImageUrl(activeProcess.url || '');
       } finally {
         setIsLoading(false);
       }
@@ -165,6 +169,14 @@ export default function FullScreenCleanViewer({
           <div className="clean-loading-box">
             <div className="spinner"></div>
           </div>
+        ) : !imageUrl ? (
+          <div className="png-empty-box" style={{ padding: '40px' }}>
+            <h3>Aucun schéma téléversé</h3>
+            <p>Aucun schéma ou document n'a encore été téléversé pour le processus {activeProcess?.code}.</p>
+            <p style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: '8px' }}>
+              Connectez-vous en Admin pour téléverser le document officiel.
+            </p>
+          </div>
         ) : (
           <div 
             className="clean-transform-layer"
@@ -178,10 +190,6 @@ export default function FullScreenCleanViewer({
               src={imageUrl} 
               alt={activeProcess?.name}
               className="clean-high-res-img"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = './processes/cartographie-interactions-smi.png';
-              }}
               draggable={false}
               onDragStart={(e) => e.preventDefault()}
             />

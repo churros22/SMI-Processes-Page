@@ -48,15 +48,21 @@ export default function DocumentViewerModal({
 
     async function loadDocument() {
       try {
-        const target = activeItem.url ? activeItem : processData;
+        const target = activeItem && activeItem.url ? activeItem : (processData && processData.url ? processData : null);
+        if (!target || !target.url || target.url.trim().length === 0) {
+          if (!isMounted) return;
+          setFileUrl('');
+          setLoading(false);
+          return;
+        }
         const resolvedUrl = await resolveProcessUrl(target);
         if (!isMounted) return;
-        setFileUrl(resolvedUrl || target.url || './processes/cartographie-interactions-smi.png');
+        setFileUrl(resolvedUrl || target.url || '');
         setLoading(false);
       } catch (err) {
         console.error("Error rendering document:", err);
         if (isMounted) {
-          setFileUrl('./processes/cartographie-interactions-smi.png');
+          setFileUrl('');
           setLoading(false);
         }
       }
