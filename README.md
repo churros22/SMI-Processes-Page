@@ -5,8 +5,6 @@
 
 Application web interactive pour l'hébergement, la visualisation et la gestion de la cartographie des 14 processus du **Système de Management Intégré (SMI)**, en français (normes **ISO 9001** et **ISO 13485** - Dispositifs Médicaux).
 
-![Logo Top Gloves Latex Industries](public/logo.png)
-
 ---
 
 ## 🔑 Codes d'Accès & Rôles
