@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg)](https://github.com/)
 [![Normes](https://img.shields.io/badge/SMI-ISO_9001_%7C_ISO_13485-003B7A.svg)](https://github.com/)
 
-Application web interactive pour l'hébergement, la visualisation et la gestion de la cartographie des 14 processus du **Système de Management Intégré (SMI)** de **Top Gloves Latex Industries**, en français (normes **ISO 9001** et **ISO 13485** - Dispositifs Médicaux).
+Application web interactive pour l'hébergement, la visualisation et la gestion de la cartographie des 14 processus du **Système de Management Intégré (SMI)**, en français (normes **ISO 9001** et **ISO 13485** - Dispositifs Médicaux).
 
 ![Logo Top Gloves Latex Industries](public/logo.png)
 
@@ -11,9 +11,8 @@ Application web interactive pour l'hébergement, la visualisation et la gestion 
 
 ## 🔑 Codes d'Accès & Rôles
 
-- 👤 **Code d'accès Utilisateur** : `tgent3`
+
   - **Mode Consultation seule** : Consultation de la cartographie des 14 processus, filtres par catégorie, recherche et ouverture des fiches (HTML, Images HD >10 Mo, Word `.docx`) dans de nouveaux onglets.
-- 🛠️ **Code d'accès Administrateur** : `admin1104`
   - **Mode Administration complète** : Édition interactive du schéma (déplacement des nœuds par glisser-déposer, création de nouvelles interactions), ajout/modification/suppression de processus, **téléversement et remplacement facile des fichiers (HTML, Images Haute Qualité jusqu'à 100 Mo, Word .docx)**, sauvegarde, import et export JSON.
 
 ---
@@ -66,4 +65,4 @@ npm run dev
 npm start
 ```
 
-© 2026 **Top Gloves Latex Industries** — SMI ISO 9001 / ISO 13485.
+© 
